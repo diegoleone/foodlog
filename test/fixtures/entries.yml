@@ -6,6 +6,7 @@ breakfast:
   proteins: 20
   carbohydrates: 30
   fats: 10
+  category: categories(:losing_weight)
 
 lunch:
   meal_type: "Lunch"
@@ -13,3 +14,4 @@ lunch:
   proteins: 40
   carbohydrates: 40
   fats: 20
+  category: categories(:muscle_loss)

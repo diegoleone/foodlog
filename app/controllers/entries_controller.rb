@@ -26,6 +26,7 @@ class EntriesController < ApplicationController
   # POST /entries.json
   def create
     @entry = Entry.new(entry_params)
+    @entry.user = User.find(1) # Diego - added to e able to add entries from the application
 
     respond_to do |format|
       if @entry.save

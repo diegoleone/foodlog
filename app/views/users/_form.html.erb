@@ -12,11 +12,25 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :username %>
-    <%= form.text_field :username %>
+    <%= form.label :username, class: "label" %>
+    <%= form.text_field :username, class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_email, class: "label" %>
+    <%= form.email_field :user_email, class: "input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_digest, class: "label" %>
+    <%= form.password_field :password_digest, class: "input" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Sign Up", class:"button is-success"%>
   </div>
 <% end %>
+
+
+
+

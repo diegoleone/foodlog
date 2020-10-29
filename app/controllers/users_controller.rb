@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to @user, notice: "User #{@user.username} was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -69,6 +69,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username)
+      params.require(:user).permit(:username, :user_email, :password_digest)
     end
 end

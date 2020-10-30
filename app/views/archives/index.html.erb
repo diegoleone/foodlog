@@ -42,7 +42,10 @@
         <%= link_to entry_path (entry) do %>
           <div class="card">
             <div class="card-content">
-              <strong><%= entry.meal_type %> by <%= entry.user.username if entry.user %>:</strong>
+              <strong><%= entry.meal_type %> by
+                <% if entry.user %>
+                  <%= link_to entry.user.username, user_path(entry.user) %>:</strong>
+                <% end %>:</strong>
               <%= entry.calories %> Calories,
               <%= entry.proteins %> g Proteins,
               <%= entry.carbohydrates %> g Carbohydrates,

@@ -1,0 +1,23 @@
+<div class="columns is-centered met-6">
+  <div class="column is-one-third">
+    <h1 class="is-size-2 has-text-weight-bold mb-3">Log in</h1>
+
+    <%= form_with(scope: :session, url: login_path,  local: true) do |form| %>
+
+      <div class="field">
+        <%= form.label :user_email, class: "label" %>
+        <%= form.email_field :user_email, class: "input" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password_digest, class: "label", placeholder: "Enter your password" %>
+        <%= form.password_field :password_digest, class: "input" %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Log in", class:"button is-success" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

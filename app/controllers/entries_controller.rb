@@ -5,7 +5,6 @@ class EntriesController < ApplicationController
   # GET /entries.json
   def index
     @entries = Entry.where("created_at >= ?", Date.today)
-    @var = 1
   end
 
   # GET /entries/1
@@ -26,7 +25,7 @@ class EntriesController < ApplicationController
   # POST /entries.json
   def create
     @entry = Entry.new(entry_params)
-    @entry.user = User.find(1) # Diego - added to e able to add entries from the application
+    @entry.user = current_user # Diego - added to e able to add entries from the application
 
     respond_to do |format|
       if @entry.save

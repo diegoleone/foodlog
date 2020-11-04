@@ -1,10 +1,12 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :authenticated
 
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.where("created_at >= ?", Date.today)
+    #@entries = current_user.entries.where("created_at >= ?", Date.today)
+    @entries = current_user.entries.all.group_by(&:day)
   end
 
   # GET /entries/1
@@ -14,7 +16,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/new
   def new
-    @entry = Entry.new
+    @entry = current_user.entries.new
   end
 
   # GET /entries/1/edit
@@ -24,8 +26,7 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
-    @entry = Entry.new(entry_params)
-    @entry.user = current_user # Diego - added to e able to add entries from the application
+    @entry = current_user.entries.new(entry_params)
 
     respond_to do |format|
       if @entry.save
@@ -65,11 +66,17 @@ class EntriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entry
-      @entry = Entry.find(params[:id])
+      @entry = current_user.entries.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def entry_params
       params.require(:entry).permit(:meal_type, :calories, :proteins, :carbohydrates, :fats, :category_id)
+    end
+
+    def authenticated
+      unless logged_in?
+        redirect_to login_path
+      end
     end
 end

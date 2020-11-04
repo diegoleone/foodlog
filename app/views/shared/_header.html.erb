@@ -7,7 +7,7 @@
           <%= link_to root_path, class: "navbar-item" do %>
             <span class="hast-text-weight-bold is-size-4 ml-4">Foodlog</span>
           <% end %>
-          <%= link_to archives_index_path, class: "navbar-item" do %>
+          <%= link_to entries_path, class: "navbar-item" do %>
             <span class="hast-text-weight-bold is-size-4 ml-4">View all entries</span>
           <% end %>
           <%= link_to users_path, class: "navbar-item" do  %>
@@ -29,7 +29,7 @@
             <%= link_to root_path, class: "navbar-item" do %>
               <span class="hast-text-weight-bold is-size-4 ml-4">Sign Up</span>
             <% end %>
-          <%end %>
+          <% end %>
 
           </a>
           <span class="navbar-burger burger" data-target="navbarMenuHeroA">
@@ -40,10 +40,11 @@
         </div>
         <div id="navbarMenuHeroA" class="navbar-menu">
           <div class="navbar-end">
-            <span classs="navbar-item">
-              <%= link_to "Create new entry", new_entry_path, class:"button is-success" %>
-            </span>
-
+            <% if logged_in?  %>
+              <span class="navbar-item">
+                <%= link_to "Create new entry", new_entry_path, class:"button is-success" %>
+              </span>
+            <% end %>
           </div>
         </div>
       </div>

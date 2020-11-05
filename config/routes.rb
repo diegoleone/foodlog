@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :users do
+    member do
+      get :confirm_email
+    end
+  end
   resources :categories
   resources :entries
   root to: "users#welcome"
@@ -9,4 +13,6 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
+
+  get '/:token/confirm_email/', :to => "users#confirm_email", as: 'confirm_email'
 end

@@ -26,6 +26,20 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def confirm_email
+    user = User.find_by_confirm_token(params[:token])
+    if user
+      user.email_confirmation # broke here - Cannot find the method
+      user.save(validate: false) # Not necessary ?
+      flash[:success] = "Welcome to the Foodlog App! Your email has been confirmed.
+      Please sign in to continue."
+      redirect_to login_path
+    else
+      flash[:error] = "Sorry. User does not exist"
+      redirect_to root_url
+    end
+  end
+
   # POST /users
   # POST /users.json
   def create
@@ -33,8 +47,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        session[:user_id] = @user.id
-        format.html { redirect_to @user, notice: "User #{@user.username} was successfully created." }
+        @user.set_confirmation_token # WHY IS THIS LINE NOT NECESSARY ? WHERE IS THE TOKEN SET ?
+        @user.save(validate: false) # might not need?
+        UserMailer.with(user: @user).registration_confirmation.deliver_now
+        format.html { redirect_to root_path, notice: "Please confirm your email address to continue" }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -77,10 +93,6 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:username, :user_email, :password)
-    end
-
-    def set_user
-      @user = User.find(params[:id])
     end
 
 end

@@ -8,16 +8,17 @@ class User < ApplicationRecord
 
   before_create :set_confirmation_token
 
-    def set_confirmation_token
-        if self.confirm_token.blank?
-          self.confirm_token = SecureRandom.urlsafe_base64.to_s
-        end
-      end
+  def confirm!
+    self.email_confirmed = true
+    self.confirm_token = nil
+    save(validate: false) # Saves user bypassing validates
+  end
 
-    def email_confirmation
-      self.email_confirmed = true
-      self.confirm_token = nil
-      #save!(:validate => false)
+  private
+  def set_confirmation_token
+    if self.confirm_token.blank?
+      self.confirm_token = SecureRandom.urlsafe_base64.to_s
     end
+  end
 
 end

@@ -28,9 +28,7 @@ class UsersController < ApplicationController
 
   def confirm_email
     user = User.find_by_confirm_token(params[:token])
-    if user
-      user.email_confirmation # broke here - Cannot find the method
-      user.save(validate: false) # Not necessary ?
+    if user && user.confirm!
       flash[:success] = "Welcome to the Foodlog App! Your email has been confirmed.
       Please sign in to continue."
       redirect_to login_path
@@ -46,9 +44,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save
-        @user.set_confirmation_token # WHY IS THIS LINE NOT NECESSARY ? WHERE IS THE TOKEN SET ?
-        @user.save(validate: false) # might not need?
+      if @user.save # checks, saves and validates
         UserMailer.with(user: @user).registration_confirmation.deliver_now
         format.html { redirect_to root_path, notice: "Please confirm your email address to continue" }
         format.json { render :show, status: :created, location: @user }

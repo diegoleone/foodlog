@@ -5,7 +5,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     @entry = entries(:breakfast)
   end
 
-  test "should get index" do
+  test "should get welcome" do
     get entries_url
     assert_response :success
   end

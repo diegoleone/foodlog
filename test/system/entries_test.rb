@@ -5,7 +5,7 @@ class EntriesTest < ApplicationSystemTestCase
     @entry = entries(:breakfast)
   end
 
-  test "visiting the index" do
+  test "visiting the welcome" do
     visit entries_url
     assert_selector "h1", text: "Foodlog – #{DateTime.now.to_s(:nice_date)}"
   end

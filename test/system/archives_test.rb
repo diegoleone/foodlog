@@ -5,7 +5,7 @@ class ArchivesTest < ApplicationSystemTestCase
     @entry = entries(:breakfast)
   end
 
-  test "visiting the archives index" do
+  test "visiting the archives welcome" do
     visit archives_index_url
     assert_selector "h1", text: "Foodlog"
     assert_selector "h3", text: "Entries for #{@entry.day}"
